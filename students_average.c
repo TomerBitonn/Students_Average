@@ -48,11 +48,7 @@ int main()
 
 	StudentInitData* students;
 	students = (StudentInitData*)malloc(num_of_students * sizeof(StudentInitData));
-	if (students == NULL)
-	{
-		printf("Memory Error\n");
-		return 1;
-	}
+	if (!students) return NULL;
 
 	for (int i = 0; i < num_of_students; i++)
 	{
@@ -76,11 +72,7 @@ int* Input_Data(int num_of_tests)
 {
 	int grade;
 	int* grades = (int*)malloc(num_of_tests * sizeof(int));
-	if (grades == NULL)
-	{
-		printf("Memory Error\n");
-		return 1;
-	}
+	if (!grades) return NULL;
 
 	for (int i = 0; i < num_of_tests; i++)
 	{
@@ -115,11 +107,7 @@ void Classification(StudentInitData* students, int num_of_students, Statistics* 
 	StudentProcessData* arr_above, * arr_below;
 
 	double* averages = (double*)malloc(num_of_students * sizeof(double)); // dynamic memory averages array
-	if (averages == NULL)
-	{
-		printf("Memory Error\n");
-		return 1;
-	}
+	if (!averages) return NULL;
 
 	for (i = 0;i < num_of_students; i++)
 		averages[i] = Student_Average(students[i].grades, students[i].tests);
@@ -128,11 +116,7 @@ void Classification(StudentInitData* students, int num_of_students, Statistics* 
 
 	arr_above = (StudentProcessData*)malloc(num_of_students * sizeof(StudentProcessData));
 	arr_below = (StudentProcessData*)malloc(num_of_students * sizeof(StudentProcessData));
-	if (arr_above == NULL || arr_below == NULL)
-	{
-		printf("Memory Error\n");
-		return 1;
-	}
+	if (!arr_above || !arr_below) return NULL;
 
 	for (i = 0; i < num_of_students; i++)
 	{
@@ -150,11 +134,7 @@ void Classification(StudentInitData* students, int num_of_students, Statistics* 
 
 	stats->above_average = (StudentProcessData*)realloc(arr_above, above_size * sizeof(StudentProcessData));
 	stats->below_average = (StudentProcessData*)realloc(arr_below, below_size * sizeof(StudentProcessData));
-	if (stats->above_average == NULL || stats->below_average == NULL)
-	{
-		printf("Memory Error\n");
-		return 1;
-	}
+	if (!stats->above_average || !stats->below_average) return NULL;
 
 	stats->above_size = above_size;
 	stats->below_size = below_size;
