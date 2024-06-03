@@ -34,7 +34,7 @@ double Student_Average(int* grades, int num_of_tests);
 double Total_Average(double* averages, int num_of_tests);
 void Classification(StudentInitData* students, int num_of_students, Statistics* stats);
 void Print_Tab(Statistics item);
-void Free_Memory(Statistics* new_students_arr, StudentInitData** students);
+void Free_Memory(Statistics* new_students_arr, StudentInitData* students, int num_of_students);
 
 int main()
 {
@@ -61,8 +61,8 @@ int main()
 
 	Print_Tab(new_students_arr);
 
-	Free_Memory(&new_students_arr, &students);
-	
+	Free_Memory(&new_students_arr, students, num_of_students);
+
 	return 0;
 }
 
@@ -107,7 +107,7 @@ void Classification(StudentInitData* students, int num_of_students, Statistics* 
 	double* averages = (double*)malloc(num_of_students * sizeof(double)); // dynamic memory averages array
 	if (!averages) return NULL;
 
-	for (i = 0;i < num_of_students; i++)
+	for (i = 0; i < num_of_students; i++)
 		averages[i] = Student_Average(students[i].grades, students[i].tests);
 
 	stats->total_average = Total_Average(averages, num_of_students); // total average for all of the students
@@ -147,7 +147,7 @@ void Print_Tab(Statistics item)
 		printf("\nID = %d\nAverage = %.02f\n", item.above_average[i].id, item.above_average[i].student_average);
 	printf("\n");
 
-	printf("\nBelow average grades: %d\n",item.below_size);
+	printf("\nBelow average grades: %d\n", item.below_size);
 	for (i = 0; i < item.below_size; i++)
 		printf("\nID = %d\nAverage = %.02f\n", item.below_average[i].id, item.below_average[i].student_average);
 	printf("\n");
@@ -155,12 +155,17 @@ void Print_Tab(Statistics item)
 	printf("The total average is: %.02f\n", item.total_average);
 }
 
-void Free_Memory(Statistics *new_students_arr, StudentInitData **students)
+void Free_Memory(Statistics* new_students_arr, StudentInitData* students, int num_of_students)
 {
-	free((*students)->grades);
-	(*students)->grades = NULL;
+	for (int i = 0; i < num_of_students; i++)
+		free(students[i].grades);
+
+	free(students);
+	students = NULL;
+
 	free(new_students_arr->above_average);
 	new_students_arr->above_average = NULL;
+
 	free(new_students_arr->below_average);
 	new_students_arr->below_average = NULL;
 }
