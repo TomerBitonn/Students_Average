@@ -1,6 +1,6 @@
 /* This program calculates students averages scores and overall
    average of all students. It divides them into two groups with
-   a score greater/equal to the average and less than the average */
+   a score greater/equal to the average and less than the average. */
 
 #define _CRT_SECURE_NO_WARNINGS
 
